@@ -1,4 +1,5 @@
 import { db } from '$lib/db';
+import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
@@ -10,7 +11,10 @@ export const load: PageServerLoad = async ({ params }) => {
 			productImage: true
 		}
 	});
-	return {
-		product
-	};
+
+	if (!product) {
+		error(404, 'Not found');
+	}
+
+	return product;
 };

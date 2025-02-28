@@ -17,8 +17,8 @@
 		<Image
 			alt={product.name}
 			src={product.productImage.url}
-			width={300}
-			height={400}
+			width={200}
+			height={300}
 			layout="constrained"
 			class="rounded-lg object-cover"
 		/>
@@ -28,10 +28,10 @@
 			</Card.CardTitle>
 			<div class="inline-flex gap-2">
 				{#if product.discount > 0}
-					<p class="text-white">${product.priceAfterDiscount}</p>
-					<span class="text-red-500 line-through">${product.price}</span>
+					<p class="font-bold">${product.priceAfterDiscount}</p>
+					<span class="text-destructive line-through dark:text-red-500">${product.price}</span>
 				{:else}
-					<p class="text-white">${product.price}</p>
+					<p class="font-bold">${product.price}</p>
 				{/if}
 			</div>
 		</Card.CardContent>

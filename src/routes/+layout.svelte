@@ -11,7 +11,7 @@
 <div class="app">
 	<Header />
 	<ModeWatcher />
-	<main class="mx-auto max-w-screen-xl px-10 py-10">
+	<main class="container min-h-screen py-5">
 		{@render children()}
 	</main>
 
