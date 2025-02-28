@@ -12,7 +12,14 @@ export const load: PageServerLoad = async () => {
 			}
 		}
 	});
+
+	const result = products.map((product) => {
+		return {
+			...product,
+			productImage: product.productImage[0]
+		};
+	});
 	return {
-		products
+		products: result
 	};
 };

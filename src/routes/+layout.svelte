@@ -1,57 +1,47 @@
 <script lang="ts">
+	import logo from '$lib/images/svelte-logo.svg';
+	import '@fontsource-variable/inter';
 	import Header from './Header.svelte';
 	import '../app.css';
-
+	import { ModeWatcher } from 'mode-watcher';
 	let { children } = $props();
+	const year = new Date().getFullYear().toString();
 </script>
 
 <div class="app">
 	<Header />
-
-	<main>
+	<ModeWatcher />
+	<main class="mx-auto max-w-screen-xl px-10 py-10">
 		{@render children()}
 	</main>
 
-	<footer>
-		<p>
-			visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to learn about SvelteKit
-		</p>
+	<footer class="not-prose border-t">
+		<section class="container mx-auto">
+			<div class="grid gap-6 p-6 sm:p-8">
+				<div class="grid gap-6">
+					<a href="/">
+						<img src={logo} alt="SvelteKit" width="40" height="40" />
+					</a>
+					<p class="max-w-screen-md">
+						Rizal Store is a leading online fashion retailer that offers the latest trends and
+						styles in clothing, shoes, and accessories for men and women. Our mission is to provide
+						our customers with a seamless and enjoyable shopping experience, allowing them to stay
+						ahead of the fashion curve without breaking the bank
+					</p>
+					<div
+						class="mb-6 flex flex-col gap-4 text-sm text-muted-foreground underline underline-offset-4 md:mb-0 md:flex-row"
+					>
+						<a href="/">Privacy Policy</a>
+						<a href="/">Terms of Service</a>
+						<a href="/">Cookie Policy</a>
+					</div>
+					<p class="text-muted-foreground">
+						©{' '}
+						<a href="https://github.com/sultonoir/Rizal Store">Rizal Store</a>
+						. All rights reserved. {year}-present.
+					</p>
+				</div>
+			</div>
+		</section>
 	</footer>
 </div>
-
-<style>
-	.app {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-	}
-
-	main {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		padding: 1rem;
-		width: 100%;
-		max-width: 64rem;
-		margin: 0 auto;
-		box-sizing: border-box;
-	}
-
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 12px;
-	}
-
-	footer a {
-		font-weight: bold;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 12px 0;
-		}
-	}
-</style>
