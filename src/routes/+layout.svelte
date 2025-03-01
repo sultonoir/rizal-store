@@ -1,9 +1,10 @@
 <script lang="ts">
-	import logo from '$lib/images/svelte-logo.svg';
+	import logo from '$lib/images/logo.png';
 	import '@fontsource-variable/inter';
 	import Header from './Header.svelte';
 	import '../app.css';
 	import { ModeWatcher } from 'mode-watcher';
+	import { Toaster } from '$lib/components/ui/sonner';
 	let { children } = $props();
 	const year = new Date().getFullYear().toString();
 </script>
@@ -44,4 +45,5 @@
 			</div>
 		</section>
 	</footer>
+	<Toaster richColors position="top-center" />
 </div>

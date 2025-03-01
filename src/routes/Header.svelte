@@ -1,5 +1,5 @@
 <script lang="ts">
-	import logo from '$lib/images/svelte-logo.svg';
+	import logo from '$lib/images/logo.png';
 	import DarkModeToggle from '$lib/components/ui/dark-mode/dark-mode-toggle.svelte';
 	import { cn } from '$lib/utils';
 	import { buttonVariants } from '$lib/components/ui/button';
