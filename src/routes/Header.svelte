@@ -5,6 +5,7 @@
 	import { buttonVariants } from '$lib/components/ui/button';
 	import { ShoppingBag } from 'lucide-svelte';
 	import { authClient } from '$lib/auth-client';
+	import SearchBar from '$lib/components/search/search-bar.svelte';
 	let { count }: { count: number } = $props();
 	const session = authClient.useSession();
 </script>
@@ -14,7 +15,7 @@
 		<a href="/">
 			<img src={logo} alt="SvelteKit" width="40" height="40" />
 		</a>
-
+		<SearchBar />
 		<div class="flex items-center gap-2">
 			<div class="relative">
 				<a
