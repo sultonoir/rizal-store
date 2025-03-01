@@ -5,14 +5,16 @@
 	import '../app.css';
 	import { ModeWatcher } from 'mode-watcher';
 	import { Toaster } from '$lib/components/ui/sonner';
-	let { children } = $props();
+	import type { LayoutProps } from './$types';
+	let { children, data }: LayoutProps = $props();
 	const year = new Date().getFullYear().toString();
 </script>
 
 <div class="app">
-	<Header />
+	<Header count={data.posts.length} />
+
 	<ModeWatcher />
-	<main class="container min-h-screen py-5">
+	<main class="container py-5">
 		{@render children()}
 	</main>
 

@@ -8,23 +8,31 @@
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { quantity } from '$lib/hooks/quantity.svelte';
 	import { toast } from 'svelte-sonner';
+	import { invalidateAll } from '$app/navigation';
 
 	let {
 		data,
 		name
 	}: {
-		data: { form: SuperValidated<Infer<AddCartSchema>> };
+		data: { form: SuperValidated<AddCartSchema> };
 		name: string;
 	} = $props();
 
 	const form = superForm(data.form, {
 		validators: zodClient(addCartSchema),
-		onUpdated: ({ form: f }) => {
+		onUpdated: async ({ form: f }) => {
 			if (f.valid) {
 				toast.success('Add to cart successfuly');
 				quantity.value = 1;
+				await invalidateAll();
 			} else {
 				toast.error('Please fix the errors in the form.');
+			}
+		},
+
+		onResult({result}){
+			if(result.type){
+				
 			}
 		}
 	});

@@ -3,7 +3,9 @@ import { error, fail, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { superValidate, message } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { addCartSchema, cartSchema } from '$lib/components/form/cart/schema';
+import { addCartSchema } from '$lib/components/form/cart/schema';
+import { addToCart } from '$lib/server/controller/CartController';
+import { generateId } from 'better-auth';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const product = await db.product.findFirst({
@@ -30,16 +32,9 @@ export const actions: Actions = {
 	addcart: async ({ request, cookies }) => {
 		const form = await superValidate(request, zod(addCartSchema));
 		console.log(form);
-		const cart = cookies.get('cart');
 
 		if (!form.valid) return fail(400, { form });
-
-		if (!cart) {
-			return [];
-		}
-
-		const carts = cartSchema.parse(JSON.parse(cart));
-
-		return message(form, 'Form posted successfully!');
+		addToCart({ cookies, data: form.data, id: generateId(10) });
+		return fail(400, { form });
 	}
 };

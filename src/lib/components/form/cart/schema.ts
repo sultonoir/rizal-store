@@ -6,7 +6,7 @@ export const addCartSchema = z.object({
 	productSlug: z.string()
 });
 
-export type AddCartSchema = typeof addCartSchema;
+export type AddCartSchema = z.infer<typeof addCartSchema>;
 
 export const cartSchema = z.array(
 	z.object({

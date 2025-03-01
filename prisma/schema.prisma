@@ -356,3 +356,10 @@ model FlashSale {
   endTime   DateTime
   createdAt DateTime @default(now())
 }
+
+model Post {
+  id        String   @id @default(nanoid(10))
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
