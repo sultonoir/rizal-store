@@ -3,7 +3,7 @@
 	import ProductImages from '$lib/components/ui/product/product-images.svelte';
 	import ProductPrice from '$lib/components/ui/product/product-price.svelte';
 	import ProductSize from '$lib/components/ui/product/product-size.svelte';
-	import Counter from '../../../../Counter.svelte';
+	import Counter from '../../../../../lib/components/shared/Counter.svelte';
 	import ProductRating from '$lib/components/ui/product/product-rating.svelte';
 	import ProductBenefite from '$lib/components/ui/product/product-benefite.svelte';
 	import AddCartForm from '$lib/components/form/cart/add-cart-form.svelte';

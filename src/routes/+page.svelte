@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Counter from './Counter.svelte';
+	import Counter from '../lib/components/shared/Counter.svelte';
 	import welcome from '$lib/images/svelte-welcome.webp';
 	import welcomeFallback from '$lib/images/svelte-welcome.png';
 	import { Image } from '@unpic/svelte';

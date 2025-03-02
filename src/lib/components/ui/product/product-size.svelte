@@ -8,9 +8,7 @@
 	};
 
 	let { sizes }: ProductSizeProps = $props();
-	$effect(() => {
-		currentSize.current = sizes[0];
-	});
+	currentSize.current = sizes[0];
 	// Fungsi untuk mengubah ukuran yang dipilih
 	const setSize = (size: StockAndSize) => {
 		currentSize.current = size;
@@ -27,8 +25,7 @@
 			<Button
 				disabled={size.amount === 0}
 				variant={currentSize.current.id === size.id ? 'default' : 'outline'}
-				onclick={() => setSize(size)}
-			>
+				onclick={() => setSize(size)}>
 				{size.name}
 			</Button>
 		{/each}

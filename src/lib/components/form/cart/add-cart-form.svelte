@@ -4,7 +4,11 @@
 	import { currentSize } from '$lib/hooks/current-size.svelte';
 	import { ShoppingBag } from 'lucide-svelte';
 	import { addCartSchema, type AddCartSchema } from './schema';
-	import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
+	import {
+		type SuperValidated,
+		type Infer,
+		superForm
+	} from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { quantity } from '$lib/hooks/quantity.svelte';
 	import { toast } from 'svelte-sonner';
@@ -27,12 +31,6 @@
 				await invalidateAll();
 			} else {
 				toast.error('Please fix the errors in the form.');
-			}
-		},
-
-		onResult({result}){
-			if(result.type){
-				
 			}
 		}
 	});
