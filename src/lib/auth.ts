@@ -13,6 +13,7 @@ import {
 } from '$env/static/private';
 import { PUBLIC_BETTER_URL } from '$env/static/public';
 import { createTransport, type TransportOptions } from 'nodemailer';
+import { anonymous } from 'better-auth/plugins';
 
 const smtpConfig = {
 	host: SMTP_HOST,
@@ -45,6 +46,7 @@ export const auth = betterAuth({
 		}
 	},
 	plugins: [
+		anonymous(),
 		admin(),
 		magicLink({
 			sendMagicLink: async ({ email, url }) => {

@@ -1,12 +1,23 @@
-import { fail, type Actions } from '@sveltejs/kit';
+import { fail, redirect, type Actions } from '@sveltejs/kit';
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { createPost } from '$lib/components/form/post/postmodel';
 import type { PageServerLoad } from './$types';
+import { auth } from '$lib/auth';
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ url, request }) => {
+	const session = await auth.api.getSession({
+		headers: request.headers
+	});
+
+	if (session) {
+		redirect(307, '/');
+	}
+
+	const callbackUrl = url.searchParams.get('callbackurl');
 	return {
-		form: await superValidate(zod(createPost))
+		form: await superValidate(zod(createPost)),
+		callbackUrl
 	};
 };
 
