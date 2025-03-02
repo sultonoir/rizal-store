@@ -4,7 +4,7 @@ import type { PageServerLoad } from './$types';
 import { superValidate, message } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { addCartSchema } from '$lib/components/form/cart/schema';
-import { addToCart } from '$lib/server/controller/CartController';
+import { addToCart } from '$lib/server/controller/cart-controller';
 import { generateId } from 'better-auth';
 
 export const load: PageServerLoad = async ({ params }) => {

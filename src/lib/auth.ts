@@ -49,7 +49,7 @@ export const auth = betterAuth({
 		magicLink({
 			sendMagicLink: async ({ email, url }) => {
 				await transporter.sendMail({
-					from: 'your-email@gmail.com',
+					from: '"Rizal Store" <noreply@acme.com>',
 					to: email,
 					subject: 'Yout magic link 🪄',
 					html: html({ link: url })

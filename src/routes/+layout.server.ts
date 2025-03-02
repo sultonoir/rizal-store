@@ -1,5 +1,5 @@
 import { db } from '$lib/db';
-import { getCart } from '$lib/server/controller/CartController';
+import { getCart } from '$lib/server/controller/cart-controller';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ cookies }) => {
