@@ -10,7 +10,7 @@
 </script>
 
 <div class="app">
-	<Header count={data.posts.length} />
+	<Header count={data.cartCount} />
 
 	<ModeWatcher />
 	<main class="container py-5">

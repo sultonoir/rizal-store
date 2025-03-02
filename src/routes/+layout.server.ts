@@ -1,12 +1,11 @@
-import { db } from '$lib/db';
-import { getCart } from '$lib/server/controller/cart-controller';
+import { getCartCount } from '$lib/server/controller/cart-controller';
 import type { LayoutServerLoad } from './$types';
 
-export const load: LayoutServerLoad = async ({ cookies }) => {
-	const posts = await db.post.findMany();
-	const carts = getCart(cookies);
+export const load: LayoutServerLoad = async ({ locals }) => {
+	const cartCount = await getCartCount({
+		userId: locals?.user?.id ?? undefined
+	});
 	return {
-		posts,
-		carts
+		cartCount
 	};
 };

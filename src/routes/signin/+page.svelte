@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { signIn } from '$lib/auth-client';
-	import * as Card from '$lib/components/ui/card';
 	import { Input } from '$lib/components/ui/input';
 	import Label from '$lib/components/ui/label/label.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
@@ -9,7 +8,7 @@
 	import { Image } from '@unpic/svelte';
 	import logo from '$lib/images/logo.png';
 	import { ArrowLeft, User } from 'lucide-svelte';
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	let email = $state('');
 	let isPending = $state(false);
 	let socialPending = $state(false);
@@ -40,9 +39,9 @@
 	};
 
 	const handleSoccial = async () => {
-		await signIn.magicLink(
+		await signIn.social(
 			{
-				email,
+				provider: 'google',
 				callbackURL: data.callbackUrl ?? '/'
 			},
 			{
@@ -53,21 +52,32 @@
 					toast.error(context.error.message);
 				},
 				onSuccess() {
-					toast.success('Send magic link success');
 					socialPending = false;
-					email = '';
 				}
 			}
 		);
 	};
 
 	const handleGuest = async () => {
-		guetPending = true;
-		const { error } = await signIn.anonymous();
-		if (error?.message) {
-			return toast.error(error.message);
-		}
-		goto('/');
+		await signIn.email(
+			{
+				email: '',
+				password: ''
+			},
+			{
+				onRequest() {
+					guetPending = true;
+				},
+				onError(context) {
+					toast.error(context.error.message);
+				},
+				onSuccess() {
+					invalidateAll();
+					guetPending = true;
+					goto('/');
+				}
+			}
+		);
 	};
 </script>
 

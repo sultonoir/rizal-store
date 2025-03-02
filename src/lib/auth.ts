@@ -1,11 +1,13 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { PrismaClient } from '@prisma/client';
-import { admin } from 'better-auth/plugins';
+import { admin, createAuthMiddleware } from 'better-auth/plugins';
 import { magicLink } from 'better-auth/plugins';
 import {
+	EMAIL_GUEST,
 	GOOGLE_CLIENT_ID,
 	GOOGLE_CLIENT_SECRET,
+	PASSWORD_GUEST,
 	SMTP_HOST,
 	SMTP_PASSWORD,
 	SMTP_PORT,
@@ -29,10 +31,29 @@ const transporter = createTransport(smtpConfig as TransportOptions);
 const prisma = new PrismaClient();
 
 export const auth = betterAuth({
+	hooks: {
+		before: createAuthMiddleware(async (ctx) => {
+			if (ctx.path === '/sign-in/email') {
+				return {
+					context: {
+						...ctx,
+						body: {
+							...ctx.body,
+							email: EMAIL_GUEST,
+							password: PASSWORD_GUEST
+						}
+					}
+				};
+			}
+		})
+	},
 	baseURL: PUBLIC_BETTER_URL,
 	database: prismaAdapter(prisma, {
 		provider: 'postgresql' // or "mysql", "postgresql", ...etc
 	}),
+	emailAndPassword: {
+		enabled: true
+	},
 	socialProviders: {
 		google: {
 			clientId: GOOGLE_CLIENT_ID,

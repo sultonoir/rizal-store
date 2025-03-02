@@ -16,10 +16,10 @@
 
 	let {
 		data,
-		name
+		productId
 	}: {
 		data: { form: SuperValidated<AddCartSchema> };
-		name: string;
+		productId: string;
 	} = $props();
 
 	const form = superForm(data.form, {
@@ -39,11 +39,11 @@
 </script>
 
 <form method="POST" action="/?/addcart" use:enhance class="w-full">
-	<Form.Field {form} name="productSlug">
+	<Form.Field {form} name="productId">
 		<Form.Control>
 			{#snippet children({ props })}
 				<Form.Label class="sr-only">product name</Form.Label>
-				<Input {...props} type="hidden" value={name} />
+				<Input {...props} type="hidden" value={productId} />
 			{/snippet}
 		</Form.Control>
 	</Form.Field>

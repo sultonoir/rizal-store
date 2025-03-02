@@ -35,7 +35,7 @@
 			<ProductSize sizes={product.stockandsize} />
 			<div class="flex gap-2">
 				<Counter />
-				<AddCartForm {data} name={product.slug} />
+				<AddCartForm {data} productId={product.id} />
 			</div>
 			<ProductBenefite />
 		</div>

@@ -4,6 +4,7 @@
 	import logo from '$lib/images/logo.png';
 	import { AdminMenulist, UserMenulist } from '$lib/constant';
 	import { authClient } from '$lib/auth-client';
+	import { invalidateAll } from '$app/navigation';
 
 	interface ProfileButtonProps {
 		role?: string | null;
@@ -17,7 +18,12 @@
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger class="size-10 rounded-full">
-		<Image src={user.image ?? logo} alt="avatar" />
+		<Image
+			src={user.image ?? logo}
+			alt="avatar"
+			width={35}
+			height={35}
+			class="rounded-full" />
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content class="w-56" align="end">
 		<DropdownMenu.Label class="font-normal">
@@ -25,7 +31,7 @@
 				<p class="text-sm font-medium capitalize leading-none">
 					{user.name}
 				</p>
-				<p class="text-xs leading-none text-muted-foreground">
+				<p class="w-full truncate text-xs text-muted-foreground">
 					{user.email}
 				</p>
 			</div>
@@ -62,6 +68,7 @@
 			<DropdownMenu.Item
 				onclick={async () => {
 					await authClient.signOut();
+					invalidateAll();
 				}}>Signout</DropdownMenu.Item>
 		</DropdownMenu.Group>
 	</DropdownMenu.Content>

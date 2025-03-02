@@ -1,4 +1,9 @@
-import { cartSchema, type AddCartSchema, type CartSchema } from '$lib/components/form/cart/schema';
+import {
+	cartSchema,
+	type AddCartSchema,
+	type CartSchema
+} from '$lib/components/form/cart/schema';
+import { db } from '$lib/db';
 import { type Cookies } from '@sveltejs/kit';
 
 export function updateCart(newItems: CartSchema, cookies: Cookies) {
@@ -25,34 +30,50 @@ export function getCart(cookies: Cookies) {
 }
 
 export async function addToCart({
-	cookies,
 	data,
+	userId
+}: {
+	data: AddCartSchema;
+	userId: string;
+}) {
+	const existCart = await db.cart.findFirst({
+		where: {
+			productId: data.productId,
+			userId,
+			size: data.size
+		}
+	});
+
+	if (!existCart) {
+		const createCart = await db.cart.create({
+			data: {
+				...data,
+				userId
+			}
+		});
+
+		return createCart;
+	}
+
+	const updateCart = await db.cart.update({
+		where: {
+			id: existCart.id
+		},
+		data: {
+			quantity: data.quantity
+		}
+	});
+
+	return updateCart;
+}
+
+export function removeFromCart({
+	cookies,
 	id
 }: {
 	cookies: Cookies;
-	data: AddCartSchema;
 	id: string;
 }) {
-	const prevCart = getCart(cookies);
-
-	const newCart = prevCart.map((item) => {
-		if (item.id === id) {
-			return { ...item, quantity: item.quantity + data.quantity };
-		}
-		return item;
-	});
-
-	const itemExists = prevCart.some((item) => item.id === id);
-
-	if (!itemExists) {
-		newCart.push({ productSlug: data.productSlug, quantity: data.quantity, size: data.size, id });
-	}
-
-	updateCart(newCart, cookies);
-	return { success: true };
-}
-
-export function removeFromCart({ cookies, id }: { cookies: Cookies; id: string }) {
 	const prevCart = getCart(cookies);
 
 	const newCart = prevCart.filter((item) => item.id !== id);
@@ -82,4 +103,19 @@ export function updateCartQuantity({
 	updateCart(updatedCart, cookies); // Simpan perubahan cart
 
 	return { success: true };
+}
+
+export async function getCartCount({ userId }: { userId?: string }) {
+	if (!userId) {
+		return 0;
+	}
+
+	const cartCount = await db.cart.aggregate({
+		where: { userId },
+		_sum: {
+			quantity: true
+		}
+	});
+
+	return cartCount._sum.quantity ?? 0;
 }

@@ -1,8 +1,7 @@
 import { getProducts } from '$lib/server/controller/product-controller';
 import { superValidate } from 'sveltekit-superforms';
 import type { Actions, PageServerLoad } from './$types';
-import { fail } from '@sveltejs/kit';
-import { generateId } from 'better-auth';
+import { fail, redirect } from '@sveltejs/kit';
 import { zod } from 'sveltekit-superforms/adapters';
 import { addCartSchema } from '$lib/components/form/cart/schema';
 import { addToCart } from '$lib/server/controller/cart-controller';
@@ -18,12 +17,15 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions: Actions = {
-	addcart: async ({ request, cookies }) => {
+	addcart: async ({ request,  locals, url }) => {
+		if (!locals.user) {
+			redirect(307, `/signin?callbackurl=${url.pathname}`);
+		}
 		const form = await superValidate(request, zod(addCartSchema));
 		console.log(form);
 
 		if (!form.valid) return fail(400, { form });
-		addToCart({ cookies, data: form.data, id: generateId(10) });
+		await addToCart({ userId: locals.user.id, data: form.data });
 		return fail(400, { form });
 	}
 };

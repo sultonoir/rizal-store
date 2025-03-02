@@ -22,7 +22,22 @@ export const load: PageServerLoad = async ({ url, request }) => {
 };
 
 export const actions: Actions = {
-	default: async (event) => {
+	post: async (event) => {
+		const form = await superValidate(event, zod(createPost));
+		if (!form.valid) {
+			return fail(400, {
+				form
+			});
+		}
+		const { images } = form.data;
+
+		if (!(images instanceof File)) {
+			return fail(400, { form });
+		}
+		console.log(images);
+		return message(form, 'hallo');
+	},
+	guest: async (event) => {
 		const form = await superValidate(event, zod(createPost));
 		if (!form.valid) {
 			return fail(400, {

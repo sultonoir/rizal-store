@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const addCartSchema = z.object({
 	quantity: z.number(),
 	size: z.string(),
-	productSlug: z.string()
+	productId: z.string()
 });
 
 export type AddCartSchema = z.infer<typeof addCartSchema>;

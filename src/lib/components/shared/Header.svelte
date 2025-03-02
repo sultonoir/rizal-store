@@ -17,27 +17,28 @@
 		<Logo />
 		<SearchBar />
 		<div class="flex flex-none items-center gap-2">
-			<div class="relative">
-				<a
-					href="/signin"
-					class={cn(
-						buttonVariants({ variant: 'ghost', size: 'icon' }),
-						'rounded-full'
-					)}>
-					<ShoppingBag />
-				</a>
-
-				{#if count > 0}
-					<div
-						class="absolute -right-[9px] -top-[4px] flex size-5 items-center justify-center rounded-full bg-primary text-xs leading-none text-primary-foreground lg:-right-1 lg:top-0">
-						{count}
-					</div>
-				{/if}
-			</div>
-
 			<DarkModeToggle />
 			{#if $session.data}
-				<ProfileButton user={$session.data.user} />
+				<div class="flex items-center gap-4">
+					<div class="relative">
+						<a
+							href="/signin"
+							class={cn(
+								buttonVariants({ variant: 'ghost', size: 'icon' }),
+								'rounded-full'
+							)}>
+							<ShoppingBag />
+						</a>
+
+						{#if count > 0}
+							<div
+								class="absolute -right-[9px] -top-[4px] flex size-5 items-center justify-center rounded-full bg-primary text-xs leading-none text-primary-foreground lg:-right-1 lg:top-0">
+								{count}
+							</div>
+						{/if}
+					</div>
+					<ProfileButton user={$session.data.user} />
+				</div>
 			{:else}
 				<a href="/signin" class={cn(buttonVariants({ variant: 'default' }))}>
 					Signin</a>
