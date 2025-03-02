@@ -3,7 +3,7 @@
 	import ProductImages from '$lib/components/ui/product/product-images.svelte';
 	import ProductPrice from '$lib/components/ui/product/product-price.svelte';
 	import ProductSize from '$lib/components/ui/product/product-size.svelte';
-	import Counter from '../../../../../lib/components/shared/Counter.svelte';
+	import Counter from '$lib/components/shared/Counter.svelte';
 	import ProductRating from '$lib/components/ui/product/product-rating.svelte';
 	import ProductBenefite from '$lib/components/ui/product/product-benefite.svelte';
 	import AddCartForm from '$lib/components/form/cart/add-cart-form.svelte';
@@ -31,8 +31,7 @@
 				discount={product.discount}
 				priceAfterDiscount={product.priceAfterDiscount}
 				priceClass="~text-2xl/4xl"
-				discountClass="~text-xl/3xl"
-			/>
+				discountClass="~text-xl/3xl" />
 			<ProductSize sizes={product.stockandsize} />
 			<div class="flex gap-2">
 				<Counter />

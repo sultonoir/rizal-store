@@ -5,6 +5,7 @@
 	import { ModeWatcher } from 'mode-watcher';
 	import { Toaster } from '$lib/components/ui/sonner';
 	import type { LayoutProps } from './$types';
+	import Footer from '$lib/components/shared/footer.svelte';
 	let { children, data }: LayoutProps = $props();
 </script>
 
@@ -15,6 +16,6 @@
 	<main class="container py-5">
 		{@render children()}
 	</main>
-
+	<Footer />
 	<Toaster richColors position="top-center" />
 </div>

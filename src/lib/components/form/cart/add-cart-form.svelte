@@ -38,7 +38,7 @@
 	const { form: formData, enhance } = form;
 </script>
 
-<form method="POST" action="?/addcart" use:enhance class="w-full">
+<form method="POST" action="/?/addcart" use:enhance class="w-full">
 	<Form.Field {form} name="productSlug">
 		<Form.Control>
 			{#snippet children({ props })}

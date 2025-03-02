@@ -1,7 +1,7 @@
 import { db } from '$lib/db';
 import { error, fail, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { superValidate, message } from 'sveltekit-superforms';
+import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { addCartSchema } from '$lib/components/form/cart/schema';
 import { addToCart } from '$lib/server/controller/cart-controller';
