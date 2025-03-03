@@ -5,7 +5,7 @@ import { createPost } from '$lib/components/form/post/postmodel';
 import type { PageServerLoad } from './$types';
 import { auth } from '$lib/auth';
 
-export const load: PageServerLoad = async ({ url, request }) => {
+export const load: PageServerLoad = async ({ request }) => {
 	const session = await auth.api.getSession({
 		headers: request.headers
 	});
@@ -14,10 +14,8 @@ export const load: PageServerLoad = async ({ url, request }) => {
 		redirect(307, '/');
 	}
 
-	const callbackUrl = url.searchParams.get('callbackurl');
 	return {
-		form: await superValidate(zod(createPost)),
-		callbackUrl
+		form: await superValidate(zod(createPost))
 	};
 };
 

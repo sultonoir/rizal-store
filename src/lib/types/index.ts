@@ -1,8 +1,13 @@
-import type { Product, ProductImage, Rating } from '@prisma/client';
+import type { Rating } from '@prisma/client';
 
-export type ProductCardProps = Product & {
-	productImage: ProductImage;
-	link: string;
+export type ProductCardProps = {
+	id: string;
+	name: string;
+	slug: string;
+	price: number;
+	discount: number;
+	priceAfterDiscount: number;
+	image: string;
 	rating: number;
 };
 

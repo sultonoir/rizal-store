@@ -11,8 +11,6 @@
 	import ReviewSection from '$lib/components/review/review-section.svelte';
 	let { data }: PageProps = $props();
 	const product = $derived(data.product);
-	const recommeds = $derived(data.recommeds);
-	const reviews = $derived(data.reviews);
 </script>
 
 <svelte:head>
@@ -44,6 +42,4 @@
 			<ProductBenefite />
 		</div>
 	</div>
-	<ReviewSection {reviews} slug={data.slug} />
-	<Recommend title="Recommendations" products={recommeds} />
 </section>

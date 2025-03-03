@@ -1,16 +1,7 @@
+import { OPTIMIZE_API_KEY } from '$env/static/private';
 import { PrismaClient } from '@prisma/client';
-import pino from 'pino';
-
-const logger = pino({
-	transport: {
-		target: 'pino-pretty',
-		options: {
-			colorize: true,
-			translateTime: 'HH:MM:ss Z',
-			ignore: 'pid,hostname'
-		}
-	}
-});
+import { withAccelerate } from '@prisma/extension-accelerate';
+import { withOptimize } from '@prisma/extension-optimize';
 
 const db = new PrismaClient({
 	log: [
@@ -19,13 +10,12 @@ const db = new PrismaClient({
 		{ level: 'warn', emit: 'event' },
 		{ level: 'error', emit: 'event' }
 	]
-});
-
-db.$on('query', (e) =>
-	logger.info(`QUERY: ${e.query} - ${e.params} - ${e.duration}`)
-);
-db.$on('info', (e) => logger.info(`INFO: ${e.message}`));
-db.$on('warn', (e) => logger.warn(`WARN: ${e.message}`));
-db.$on('error', (e) => logger.error(`ERROR: ${e.message}`));
+})
+	.$extends(
+		withOptimize({
+			apiKey: OPTIMIZE_API_KEY
+		})
+	)
+	.$extends(withAccelerate());
 
 export { db };

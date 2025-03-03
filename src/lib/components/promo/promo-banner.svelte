@@ -1,10 +1,14 @@
 <script lang="ts">
-	import type { Promo } from '@prisma/client';
 	import * as Carousel from '$lib/components/ui/carousel';
 	import { Image } from '@unpic/svelte';
 	import { transform } from 'unpic/providers/imagekit';
 	import Autoplay from 'embla-carousel-autoplay';
 	const plugin = Autoplay({ delay: 2000 });
+	type Promo = {
+		id: string;
+		image: string;
+		slug: string;
+	};
 	let promotions: Promo[] = $props();
 </script>
 
@@ -19,7 +23,7 @@
 				<div class="mx-auto w-fit overflow-hidden rounded-3xl">
 					<Image
 						src={promo.image}
-						alt={promo.title}
+						alt={promo.slug}
 						priority={i === 0}
 						className="object-cover rounded-lg"
 						width={900}
