@@ -9,7 +9,6 @@
 	import { quantity } from '$lib/hooks/quantity.svelte';
 	import { toast } from 'svelte-sonner';
 	import { invalidateAll } from '$app/navigation';
-	import { page } from '$app/state';
 	let {
 		data,
 		productId

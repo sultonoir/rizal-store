@@ -1,6 +1,6 @@
 import { db } from '$lib/db';
 import { error } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import type { EntryGenerator, PageServerLoad } from './$types';
 import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { addCartSchema } from '$lib/components/form/cart/schema';
@@ -25,3 +25,15 @@ export const load: PageServerLoad = async ({ params }) => {
 		form: await superValidate(zod(addCartSchema))
 	};
 };
+
+export const entries: EntryGenerator = () => {
+	return [
+		{
+			category: 't-shirt',
+			subcategory: 'basic t-shirt',
+			product: 'rainame-t-shirt-thrdy-black'
+		}
+	];
+};
+
+export const prerender = true;

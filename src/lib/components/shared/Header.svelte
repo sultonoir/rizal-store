@@ -1,5 +1,4 @@
 <script lang="ts">
-	import logo from '$lib/images/logo.png';
 	import DarkModeToggle from '$lib/components/ui/dark-mode/dark-mode-toggle.svelte';
 	import { cn } from '$lib/utils';
 	import { buttonVariants } from '$lib/components/ui/button';
@@ -22,7 +21,8 @@
 				<div class="flex items-center gap-4">
 					<div class="relative">
 						<a
-							href="/signin"
+							href="/cart"
+							data-sveltekit-preload-data
 							class={cn(
 								buttonVariants({ variant: 'ghost', size: 'icon' }),
 								'rounded-full'

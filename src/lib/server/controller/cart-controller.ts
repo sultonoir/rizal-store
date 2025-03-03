@@ -1,32 +1,68 @@
 import {
-	cartSchema,
 	type AddCartSchema,
-	type CartSchema
+	type UpdateCart
 } from '$lib/components/form/cart/schema';
 import { db } from '$lib/db';
-import { type Cookies } from '@sveltejs/kit';
 
-export function updateCart(newItems: CartSchema, cookies: Cookies) {
-	cookies.set('cart', JSON.stringify(newItems), {
-		httpOnly: true,
-		secure: true,
-		sameSite: 'strict',
-		maxAge: 60 * 60 * 24 * 7,
-		path: '/'
+export async function getCartUserId(userId: string) {
+	const carts = await db.cart.findMany({
+		where: {
+			userId
+		}
 	});
-}
 
-export function getCart(cookies: Cookies) {
-	const cart = cookies.get('cart');
-	if (!cart) {
-		return [];
-	}
-	try {
-		return cartSchema.parse(JSON.parse(cart));
-	} catch {
-		console.error('Failed to parse cart cookie');
-		return [];
-	}
+	const products = await db.productDetails.findMany({
+		where: {
+			product: {
+				id: {
+					in: carts.map((item) => item.productId)
+				}
+			}
+		},
+		include: {
+			product: {
+				include: {
+					productImage: {
+						take: 1,
+						orderBy: {
+							createdAt: 'asc'
+						}
+					},
+					stockandsize: true
+				}
+			},
+			subcategory: true,
+			category: true
+		}
+	});
+
+	// Bangun ulang result berdasarkan cart, bukan hanya berdasarkan hasil query
+
+	const result = carts.map((cartItem) => {
+		const product = products.find((p) => p.product.id === cartItem.productId);
+
+		if (!product) return null; // Jika produk tidak ditemukan, skip
+
+		// Cari stok yang sesuai dengan ukuran dari cart
+		const stock = product.product.stockandsize.find(
+			(s) => s.name === cartItem.size
+		);
+
+		// Jika ukuran tidak ditemukan atau stok kurang, item tetap ditampilkan tetapi dengan `maxQuantity = 0`
+		const maxQuantity = stock ? stock.amount : 0;
+
+		return {
+			...product.product,
+			id: cartItem.id,
+			productImage: product.product.productImage[0] || null,
+			quantity: cartItem.quantity,
+			size: cartItem.size,
+			link: `/products/${product.category.name}/${product.subcategory.name}/${product.product.slug}`,
+			maxQuantity // Jika tidak ada stok, maxQuantity = 0
+		};
+	});
+
+	return result.filter((item) => item !== null);
 }
 
 export async function addToCart({
@@ -60,49 +96,48 @@ export async function addToCart({
 			id: existCart.id
 		},
 		data: {
-			quantity: data.quantity
+			quantity: existCart.quantity + data.quantity
 		}
 	});
 
 	return updateCart;
 }
 
-export function removeFromCart({
-	cookies,
+export async function removeFromCart({
+	userId,
 	id
 }: {
-	cookies: Cookies;
+	userId: string;
 	id: string;
 }) {
-	const prevCart = getCart(cookies);
-
-	const newCart = prevCart.filter((item) => item.id !== id);
-
-	updateCart(newCart, cookies);
-}
-
-export function updateCartQuantity({
-	id,
-	newQuantity,
-	cookies
-}: {
-	id: string;
-	newQuantity: number;
-	cookies: Cookies;
-}) {
-	const cart = getCart(cookies); // Ambil cart saat ini
-
-	// Cek apakah item dengan productSlug & size sudah ada dalam cart
-	const updatedCart = cart.map((item) => {
-		if (item.id === id) {
-			return { ...item, quantity: newQuantity }; // Update quantity
+	const cart = await db.cart.delete({
+		where: {
+			userId,
+			id
 		}
-		return item;
 	});
 
-	updateCart(updatedCart, cookies); // Simpan perubahan cart
+	return cart;
+}
 
-	return { success: true };
+export async function updateCart({
+	data,
+	userId
+}: {
+	data: UpdateCart;
+	userId: string;
+}) {
+	const cart = await db.cart.update({
+		where: {
+			id: data.id,
+			userId
+		},
+		data: {
+			quantity: data.quantity
+		}
+	});
+
+	return cart;
 }
 
 export async function getCartCount({ userId }: { userId?: string }) {

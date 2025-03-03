@@ -8,13 +8,15 @@ export const addCartSchema = z.object({
 
 export type AddCartSchema = z.infer<typeof addCartSchema>;
 
-export const cartSchema = z.array(
-	z.object({
-		productSlug: z.string(),
-		quantity: z.number(),
-		size: z.string(),
-		id: z.string()
-	})
-);
+export const updateCartSchema = z.object({
+	id: z.string(),
+	quantity: z.number()
+});
 
-export type CartSchema = z.infer<typeof cartSchema>;
+export type UpdateCart = z.infer<typeof updateCartSchema>;
+
+export const removecartSchema = z.object({
+	id: z.string().min(1)
+});
+
+export type RemoveCartSchema = z.infer<typeof removecartSchema>;
