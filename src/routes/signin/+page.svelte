@@ -62,7 +62,8 @@
 		await signIn.email(
 			{
 				email: '',
-				password: ''
+				password: '',
+				callbackURL: data.callbackUrl ?? '/'
 			},
 			{
 				onRequest() {

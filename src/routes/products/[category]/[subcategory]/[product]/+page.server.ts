@@ -1,11 +1,9 @@
 import { db } from '$lib/db';
-import { error, fail, type Actions } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { addCartSchema } from '$lib/components/form/cart/schema';
-import { addToCart } from '$lib/server/controller/cart-controller';
-import { generateId } from 'better-auth';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const product = await db.product.findFirst({
@@ -26,15 +24,4 @@ export const load: PageServerLoad = async ({ params }) => {
 		product,
 		form: await superValidate(zod(addCartSchema))
 	};
-};
-
-export const actions: Actions = {
-	addcart: async ({ request, cookies }) => {
-		const form = await superValidate(request, zod(addCartSchema));
-		console.log(form);
-
-		if (!form.valid) return fail(400, { form });
-		addToCart({ cookies, data: form.data, id: generateId(10) });
-		return fail(400, { form });
-	}
 };

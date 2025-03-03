@@ -17,12 +17,11 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions: Actions = {
-	addcart: async ({ request,  locals, url }) => {
+	addcart: async ({ request, locals }) => {
 		if (!locals.user) {
-			redirect(307, `/signin?callbackurl=${url.pathname}`);
+			redirect(307, `/signin?callbackurl=${request.headers.get('referer')}`);
 		}
 		const form = await superValidate(request, zod(addCartSchema));
-		console.log(form);
 
 		if (!form.valid) return fail(400, { form });
 		await addToCart({ userId: locals.user.id, data: form.data });
