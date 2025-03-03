@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Editor from '$lib/components/shared/editor.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import type { PageProps } from './$types';
 
@@ -41,5 +40,6 @@
 	<div class="space-x-3">
 		<Button disabled={page === 1} onclick={() => page--}>back</Button>
 		<Button onclick={() => page++}>next</Button>
+		<a href="/about" data-sveltekit-preload-data>about</a>
 	</div>
 </div>

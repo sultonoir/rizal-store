@@ -6,7 +6,19 @@
 	import { Toaster } from '$lib/components/ui/sonner';
 	import type { LayoutProps } from './$types';
 	import Footer from '$lib/components/shared/footer.svelte';
+	import { onNavigate } from '$app/navigation';
 	let { children, data }: LayoutProps = $props();
+
+	onNavigate((navigation) => {
+		if (!document.startViewTransition) return;
+
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
+	});
 </script>
 
 <div class="app">

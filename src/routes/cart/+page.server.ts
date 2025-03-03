@@ -4,7 +4,7 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	if (!locals.user) {
-		redirect(307, '/');
+		redirect(307, '/signin');
 	}
 	const carts = await getCartUserId(locals.user.id);
 
@@ -12,5 +12,3 @@ export const load: PageServerLoad = async ({ locals }) => {
 		carts
 	};
 };
-
-export const prerender = true;

@@ -7,8 +7,12 @@
 	import ProductRating from '$lib/components/ui/product/product-rating.svelte';
 	import ProductBenefite from '$lib/components/ui/product/product-benefite.svelte';
 	import AddCartForm from '$lib/components/form/cart/add-cart-form.svelte';
+	import Recommend from '$lib/components/shared/recommend.svelte';
+	import ReviewSection from '$lib/components/review/review-section.svelte';
 	let { data }: PageProps = $props();
-	const product = data.product;
+	const product = $derived(data.product);
+	const recommeds = $derived(data.recommeds);
+	const reviews = $derived(data.reviews);
 </script>
 
 <svelte:head>
@@ -16,7 +20,7 @@
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
-<section>
+<section class="min-h-screen space-y-10 py-5">
 	<div class="flex flex-col gap-4 lg:flex-row lg:gap-10">
 		<div class="lg:w-[55%]">
 			<ProductImages images={product.productImage} />
@@ -40,4 +44,6 @@
 			<ProductBenefite />
 		</div>
 	</div>
+	<ReviewSection {reviews} slug={data.slug} />
+	<Recommend title="Recommendations" products={recommeds} />
 </section>
