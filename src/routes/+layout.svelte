@@ -11,7 +11,6 @@
 
 <div class="app">
 	<Header count={data.cartCount} />
-
 	<ModeWatcher />
 	<main class="container py-5">
 		{@render children()}
