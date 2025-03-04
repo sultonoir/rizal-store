@@ -42,4 +42,6 @@
 			<ProductBenefite />
 		</div>
 	</div>
+	<ReviewSection reviews={data.reviews} slug={data.slug} />
+	<Recommend products={data.recommendations} />
 </section>

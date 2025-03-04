@@ -1,19 +1,23 @@
 import { error } from '@sveltejs/kit';
 import type { EntryGenerator, PageServerLoad } from './$types';
-import { superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
-import { addCartSchema } from '$lib/components/form/cart/schema';
 import { getProductBySlug } from '$lib/server/controller/product-controller';
+import { getRecommends } from '$lib/server/controller/recommend-controller';
+import { getReviews } from '$lib/server/controller/reviewer-controller';
 
 export const load: PageServerLoad = async ({ params }) => {
-	const product = await getProductBySlug({ slug: params.slug });
+	const [product, recommendations, reviews] = await Promise.all([
+		getProductBySlug({ slug: params.slug }),
+		getRecommends({ slug: params.slug }),
+		getReviews({ slug: params.slug })
+	]);
 	if (!product) {
 		error(404, 'Not found');
 	}
 
 	return {
 		product,
-		form: await superValidate(zod(addCartSchema)),
+		recommendations,
+		reviews,
 		slug: params.slug
 	};
 };

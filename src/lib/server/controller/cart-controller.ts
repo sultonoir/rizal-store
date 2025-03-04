@@ -8,61 +8,58 @@ export async function getCartUserId(userId: string) {
 	const carts = await db.cart.findMany({
 		where: {
 			userId
-		}
-	});
-
-	const products = await db.productDetails.findMany({
-		where: {
-			product: {
-				id: {
-					in: carts.map((item) => item.productId)
-				}
-			}
 		},
-		include: {
+
+		select: {
+			size: true,
+			quantity: true,
+			id: true,
 			product: {
-				include: {
+				select: {
+					id: true,
+					name: true,
+					slug: true,
+					price: true,
+					discount: true,
+					priceAfterDiscount: true,
+					stockandsize: {
+						select: {
+							productId: true,
+							name: true,
+							amount: true
+						}
+					},
 					productImage: {
 						take: 1,
+						select: {
+							url: true
+						},
 						orderBy: {
 							createdAt: 'asc'
 						}
-					},
-					stockandsize: true
+					}
 				}
-			},
-			subcategory: true,
-			category: true
+			}
 		}
 	});
 
-	// Bangun ulang result berdasarkan cart, bukan hanya berdasarkan hasil query
-
-	const result = carts.map((cartItem) => {
-		const product = products.find((p) => p.product.id === cartItem.productId);
-
-		if (!product) return null; // Jika produk tidak ditemukan, skip
-
-		// Cari stok yang sesuai dengan ukuran dari cart
-		const stock = product.product.stockandsize.find(
-			(s) => s.name === cartItem.size
-		);
-
-		// Jika ukuran tidak ditemukan atau stok kurang, item tetap ditampilkan tetapi dengan `maxQuantity = 0`
-		const maxQuantity = stock ? stock.amount : 0;
-
+	const result = carts.map((cart) => {
+		const size = cart.product.stockandsize.find((s) => s.name == cart.size);
 		return {
-			...product.product,
-			id: cartItem.id,
-			productImage: product.product.productImage[0] || null,
-			quantity: cartItem.quantity,
-			size: cartItem.size,
-			link: `/products/${product.category.name}/${product.subcategory.name}/${product.product.slug}`,
-			maxQuantity // Jika tidak ada stok, maxQuantity = 0
+			id: cart.id,
+			size: size?.name ?? 'S',
+			quantity: cart.quantity,
+			name: cart.product.name,
+			slug: cart.product.slug,
+			price: cart.product.price,
+			priceAfterDiscount: cart.product.priceAfterDiscount,
+			discount: cart.product.discount,
+			image: cart.product.productImage[0].url,
+			max: size?.amount ?? 99
 		};
 	});
 
-	return result.filter((item) => item !== null);
+	return result;
 }
 
 export async function addToCart({

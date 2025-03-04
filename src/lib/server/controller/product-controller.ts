@@ -198,7 +198,11 @@ export async function getProductBySlug({ slug }: { slug: string }) {
 	}
 	const rating = await db.rating.aggregate({
 		where: { product: { slug } },
-		_avg: { value: true }
+		_avg: { value: true },
+		cacheStrategy: {
+			ttl: 600,
+			swr: 600
+		}
 	});
 
 	return {

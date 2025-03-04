@@ -1,7 +1,7 @@
 import { db } from '$lib/db';
 import type { RatingStats } from '$lib/types';
 
-export async function queryRating({
+export async function getReviews({
 	pageSize = 4,
 	slug,
 	page
@@ -28,22 +28,38 @@ export async function queryRating({
 			},
 			take: pageSize,
 			skip,
-			orderBy: { createdAt: 'desc' }
+			orderBy: { createdAt: 'desc' },
+			cacheStrategy: {
+				ttl: 600,
+				swr: 600
+			}
 		}),
 
 		db.rating.count({
-			where: { product: { slug } }
+			where: { product: { slug } },
+			cacheStrategy: {
+				ttl: 600,
+				swr: 600
+			}
 		}),
 
 		db.rating.aggregate({
 			where: { product: { slug } },
-			_avg: { value: true }
+			_avg: { value: true },
+			cacheStrategy: {
+				ttl: 600,
+				swr: 600
+			}
 		}),
 
 		db.rating.groupBy({
 			by: ['value'],
 			where: { product: { slug } },
-			_count: { value: true }
+			_count: { value: true },
+			cacheStrategy: {
+				ttl: 600,
+				swr: 600
+			}
 		})
 	]);
 
