@@ -8,7 +8,7 @@ const SortEnum = {
 	LATEST: 'latest',
 	LOWEST_PRICE: 'lowest-price',
 	HIGH_PRICE: 'high-price'
-} as const;
+};
 
 export const SearchProductsParams = z.object({
 	q: z.string().optional(),
@@ -21,13 +21,15 @@ export const SearchProductsParams = z.object({
 	rating: z.string().optional(),
 	page: z.string().optional(),
 	take: z.number().optional(),
-	sort: z.nativeEnum(SortEnum).default(SortEnum.LATEST)
+	ids: z.array(z.string()).optional(),
+	sort: z.nativeEnum(SortEnum).optional().nullable()
 });
 
 export type SearchProductsParams = z.infer<typeof SearchProductsParams>;
 
 export async function getProducts({
 	q,
+	ids,
 	category,
 	subcategory,
 	size,
@@ -41,6 +43,9 @@ export async function getProducts({
 }: SearchProductsParams) {
 	const conditions: Prisma.ProductWhereInput[] = [];
 
+	if (ids) {
+		conditions.push({ id: { in: ids } });
+	}
 	// Search by product name
 	if (q) {
 		conditions.push({ name: { contains: q, mode: 'insensitive' } });
@@ -112,7 +117,11 @@ export async function getProducts({
 				? { priceAfterDiscount: 'asc' }
 				: sort === 'high-price'
 					? { priceAfterDiscount: 'desc' }
-					: {})
+					: sort === ''
+						? {
+								createdAt: 'asc'
+							}
+						: {})
 	};
 
 	const products = await db.product.findMany({
@@ -171,8 +180,12 @@ export async function getProducts({
 		};
 	});
 
-	if (rating) {
+	if (sort === 'most-rating') {
 		return result.sort((a, b) => b.rating - a.rating);
+	}
+
+	if (rating) {
+		return result.filter((a) => a.rating >= parseInt(rating));
 	}
 
 	return result;

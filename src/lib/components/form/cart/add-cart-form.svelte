@@ -2,13 +2,14 @@
 	import * as Form from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
 	import { currentSize } from '$lib/hooks/current-size.svelte';
-	import { ShoppingBag } from 'lucide-svelte';
+	import { Loader2, ShoppingBag } from 'lucide-svelte';
 	import { addCartSchema, type AddCartSchema } from './schema';
 	import { type SuperValidated, superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { quantity } from '$lib/hooks/quantity.svelte';
 	import { toast } from 'svelte-sonner';
 	import { invalidateAll } from '$app/navigation';
+	let isPending = $state(false);
 	let {
 		data,
 		productId
@@ -19,6 +20,9 @@
 
 	const form = superForm(data.form, {
 		validators: zodClient(addCartSchema),
+		onSubmit() {
+			isPending = true;
+		},
 		onUpdated: async ({ form: f }) => {
 			if (f.valid) {
 				toast.success('Add to cart successfuly');
@@ -27,6 +31,9 @@
 			} else {
 				toast.error('Please fix the errors in the form.');
 			}
+		},
+		onResult() {
+			isPending = false;
 		}
 	});
 
@@ -58,8 +65,12 @@
 			{/snippet}
 		</Form.Control>
 	</Form.Field>
-	<Form.Button class="h-[50px] w-full gap-2">
-		<ShoppingBag />
+	<Form.Button disabled={isPending} class="h-[50px] w-full gap-2">
+		{#if isPending}
+			<Loader2 class="animate-spin" />
+		{:else}
+			<ShoppingBag />
+		{/if}
 		Add to cart
 	</Form.Button>
 </form>

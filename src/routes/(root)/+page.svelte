@@ -11,7 +11,7 @@
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
-<div class="min-h-screen space-y-10 py-5">
+<div class="mx-auto min-h-screen max-w-screen-lg space-y-10 py-5">
 	<PromoBanner {...data.promotions} />
 	<Recommend products={data.products} />
 </div>

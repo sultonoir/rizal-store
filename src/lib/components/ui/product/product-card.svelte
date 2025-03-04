@@ -4,7 +4,7 @@
 	import ProductPrice from './product-price.svelte';
 	import ProductRating from './product-rating.svelte';
 	import type { ProductCardProps } from '$lib/types';
-
+	import { transform } from 'unpic/providers/imagekit';
 	let { product }: { product: ProductCardProps } = $props();
 </script>
 
@@ -17,8 +17,9 @@
 		<Image
 			alt={product.name}
 			src={product.image}
-			width={200}
-			height={300}
+			width={250}
+			height={400}
+			transformer={transform}
 			layout="constrained"
 			class="rounded-lg object-cover"
 			background="data:image/bmp;base64,Qk1aBAAAAAAAADYAAAAoAAAABAAAAAMAAAABABgAAAAAACQAAAATCwAAEwsAAAAAAAAAAAAAzNbS7e7s0cvMcneGrrfBz9HasazCPUaNZnugg5O2g5HEE0qg" />

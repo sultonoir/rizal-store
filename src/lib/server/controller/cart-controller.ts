@@ -9,7 +9,6 @@ export async function getCartUserId(userId: string) {
 		where: {
 			userId
 		},
-
 		select: {
 			size: true,
 			quantity: true,
@@ -40,6 +39,9 @@ export async function getCartUserId(userId: string) {
 					}
 				}
 			}
+		},
+		orderBy: {
+			createdAt: 'asc'
 		}
 	});
 

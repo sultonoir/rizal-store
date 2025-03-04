@@ -100,8 +100,8 @@
 		</div>
 	{/each}
 	<div
-		class="fixed bottom-0 left-0 right-0 z-10 mt-auto border-t bg-muted p-3 lg:relative lg:z-0 lg:rounded-lg lg:border-none">
-		<div class="flex items-center justify-between">
+		class="fixed bottom-0 left-0 right-0 z-10 m-2 mt-auto border-t lg:sticky lg:bottom-1 lg:z-0 lg:border-none">
+		<div class="flex items-center justify-between rounded-lg bg-muted p-3">
 			<div class="flex flex-col items-start justify-start">
 				<p class="text-base">First Order (- $4)</p>
 				<p class="text-lg">

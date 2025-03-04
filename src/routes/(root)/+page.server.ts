@@ -18,7 +18,7 @@ import {
 export const load: PageServerLoad = async () => {
 	const [promotions, products] = await Promise.all([
 		getPromotions(),
-		getProducts({ sort: 'latest' })
+		getProducts({ sort: 'most-rating' })
 	]);
 	return {
 		promotions,
@@ -48,7 +48,7 @@ export const actions: Actions = {
 			return message(form, 'Error add to cart');
 		}
 
-		return cartIncrement;
+		return message(form, cartIncrement);
 	},
 	updatecart: async ({ request, locals }) => {
 		if (!locals.user) {

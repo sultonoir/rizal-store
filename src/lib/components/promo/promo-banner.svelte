@@ -1,25 +1,41 @@
 <script lang="ts">
-	import * as Carousel from '$lib/components/ui/carousel';
+	import { onMount } from 'svelte';
+	import Swiper from 'swiper';
+	import 'swiper/css';
+	import { Autoplay } from 'swiper/modules';
 	import { Image } from '@unpic/svelte';
 	import { transform } from 'unpic/providers/imagekit';
-	import Autoplay from 'embla-carousel-autoplay';
-	const plugin = Autoplay({ delay: 2000 });
+
 	type Promo = {
 		id: string;
 		image: string;
 		slug: string;
 	};
+
 	let promotions: Promo[] = $props();
+
+	let swiperContainer: HTMLDivElement | null = null;
+
+	onMount(() => {
+		if (swiperContainer) {
+			new Swiper(swiperContainer, {
+				loop: true,
+				slidesPerView: 1,
+				autoplay: { delay: 3000, disableOnInteraction: false },
+				scrollbar: { el: '.swiper-scrollbar', draggable: true },
+				pagination: { el: '.swiper-pagination', clickable: true },
+				modules: [Autoplay]
+			});
+		}
+	});
 </script>
 
-<Carousel.Root
-	class="mx-auto max-w-screen-lg"
-	plugins={[plugin]}
-	onmouseenter={plugin.stop}
-	onmouseleave={plugin.reset}>
-	<Carousel.Content>
-		{#each promotions as promo, i (i)}
-			<Carousel.Item class="min-w-fit">
+<div
+	bind:this={swiperContainer}
+	class="swiper relative z-0 max-w-[928px] overflow-hidden rounded-2xl">
+	<div class="swiper-wrapper">
+		{#each promotions as promo, i (promo.id)}
+			<div class="swiper-slide w-fit">
 				<div class="mx-auto w-fit overflow-hidden rounded-3xl">
 					<Image
 						src={promo.image}
@@ -32,9 +48,7 @@
 						background="data:image/bmp;base64,Qk1aBAAAAAAAADYAAAAoAAAABAAAAAMAAAABABgAAAAAACQAAAATCwAAEwsAAAAAAAAAAAAAzNbS7e7s0cvMcneGrrfBz9HasazCPUaNZnugg5O2g5HEE0qg"
 						transformer={transform} />
 				</div>
-			</Carousel.Item>
+			</div>
 		{/each}
-	</Carousel.Content>
-	<Carousel.Previous />
-	<Carousel.Next />
-</Carousel.Root>
+	</div>
+</div>

@@ -40,6 +40,7 @@
 				<AddCartForm {data} productId={product.id} />
 			</div>
 			<ProductBenefite />
+			{@html product.desc}
 		</div>
 	</div>
 	<ReviewSection reviews={data.reviews} slug={data.slug} />
