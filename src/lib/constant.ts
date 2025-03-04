@@ -2,6 +2,10 @@ export const APP_TITLE = 'Rizal Store';
 export const DATABASE_PREFIX = 'acme';
 export const TEST_DB_PREFIX = 'test_acme';
 export const EMAIL_SENDER = '"Rizal Store" <noreply@acme.com>';
+import hiw1 from '$lib/images/HIW1img.png?enhanced';
+import hiw2 from '$lib/images/HIW2img.png?enhanced';
+import hiw3 from '$lib/images/HIW3img.png?enhanced';
+import hiw4 from '$lib/images/HIW4img.png?enhanced';
 
 export enum Paths {
 	Home = '/',
@@ -230,28 +234,28 @@ export const Hiws = [
 		step: 'Step 1',
 		title: 'Filter & Discover',
 		desc: 'Smart filtering and suggestions make it easy to find',
-		image: '/HIW1img.png',
+		image: hiw1,
 		type: 'success' as StepType // Explicitly cast to the expected type
 	},
 	{
 		step: 'Step 2',
 		title: 'Add to bag',
 		desc: 'Easily select the correct items and add them to the cart',
-		image: '/HIW2img.png',
+		image: hiw2,
 		type: 'paid' as StepType // Explicitly cast to the expected type
 	},
 	{
 		step: 'Step 3',
 		title: 'Fast shipping',
 		desc: 'The carrier will confirm and ship quickly to you',
-		image: '/HIW3img.png',
+		image: hiw3,
 		type: 'shipped' as StepType // Explicitly cast to the expected type
 	},
 	{
 		step: 'Step 4',
 		title: 'Enjoy the product',
 		desc: 'Have fun and enjoy your 5-star quality products',
-		image: '/HIW4img.png',
+		image: hiw4,
 		type: 'cancel' as StepType // Explicitly cast to the expected type
 	}
 ];

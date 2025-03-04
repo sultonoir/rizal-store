@@ -9,13 +9,21 @@
 	import AddCartForm from '$lib/components/form/cart/add-cart-form.svelte';
 	import Recommend from '$lib/components/shared/recommend.svelte';
 	import ReviewSection from '$lib/components/review/review-section.svelte';
+	import ProductDesc from '$lib/components/ui/product/product-desc.svelte';
 	let { data }: PageProps = $props();
 	const product = $derived(data.product);
+	const desc = $derived(data.product.desc);
 </script>
 
 <svelte:head>
-	<title>{product.name}</title>
-	<meta name="description" content="Svelte demo app" />
+	<title>{product.name} • Rizal Store</title>
+	<meta
+		name="description"
+		content="Rizal Store is a leading online fashion retailer that offers the
+					latest trends and styles in clothing, shoes, and accessories for men
+					and women. Our mission is to provide our customers with a seamless and
+					enjoyable shopping experience, allowing them to stay ahead of the
+					fashion curve without breaking the bank" />
 </svelte:head>
 
 <section class="min-h-screen space-y-10 py-5">
@@ -39,8 +47,8 @@
 				<Counter />
 				<AddCartForm {data} productId={product.id} />
 			</div>
+			<ProductDesc {desc} />
 			<ProductBenefite />
-			{@html product.desc}
 		</div>
 	</div>
 	<ReviewSection reviews={data.reviews} slug={data.slug} />

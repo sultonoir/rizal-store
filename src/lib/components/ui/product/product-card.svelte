@@ -13,7 +13,7 @@
 	<a
 		href={`/product/${product.slug}`}
 		title={product.name}
-		data-sveltekit-preload-data>
+		data-sveltekit-preload>
 		<Image
 			alt={product.name}
 			src={product.image}

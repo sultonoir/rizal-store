@@ -18,7 +18,7 @@ import {
 export const load: PageServerLoad = async () => {
 	const [promotions, products] = await Promise.all([
 		getPromotions(),
-		getProducts({ sort: 'most-rating' })
+		getProducts({ sort: 'most-rating', take: 22 })
 	]);
 	return {
 		promotions,

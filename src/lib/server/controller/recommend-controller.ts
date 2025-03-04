@@ -16,10 +16,6 @@ export async function getRecommends({ slug, take }: RecommedParams) {
 					}
 				}
 			}
-		},
-		cacheStrategy: {
-			ttl: 600,
-			swr: 600
 		}
 	});
 	return await getProducts({ category: category?.name, take });

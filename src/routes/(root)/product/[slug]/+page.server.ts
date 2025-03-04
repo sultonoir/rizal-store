@@ -1,5 +1,5 @@
 import { error } from '@sveltejs/kit';
-import type { EntryGenerator, PageServerLoad } from './$types';
+import type { PageServerLoad } from './$types';
 import { getProductBySlug } from '$lib/server/controller/product-controller';
 import { getRecommends } from '$lib/server/controller/recommend-controller';
 import { getReviews } from '$lib/server/controller/reviewer-controller';
@@ -21,13 +21,3 @@ export const load: PageServerLoad = async ({ params }) => {
 		slug: params.slug
 	};
 };
-
-export const entries: EntryGenerator = () => {
-	return [
-		{
-			slug: 'rainame-t-shirt-thrdy-black'
-		}
-	];
-};
-
-export const prerender = true;
