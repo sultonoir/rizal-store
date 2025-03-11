@@ -1,9 +1,11 @@
 // import { getRequestContext } from '@cloudflare/next-on-pages'
 
-export const runtime = 'edge'
+import { NextResponse } from "next/server";
+
+export const runtime = "edge";
 
 export async function GET() {
-  const responseText = 'Hello World'
+  const responseText = "Hello World";
 
   // In the edge runtime you can use Bindings that are available in your application
   // (for more details see:
@@ -17,5 +19,7 @@ export async function GET() {
   // const suffix = await myKv.get('suffix')
   // return new Response(responseText + suffix)
 
-  return new Response(responseText)
+  return NextResponse.json({
+    message: responseText,
+  });
 }
