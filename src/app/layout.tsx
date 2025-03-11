@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/styles/globals.css";
+import { Provider } from "@/provider/provider";
 
 const interSans = Inter({
   subsets: ["latin"],
@@ -77,11 +78,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body className={`${interSans.className} overflow-x-hidden antialiased`}>
-        {children}
+        <Provider>{children}</Provider>
       </body>
     </html>
   );
