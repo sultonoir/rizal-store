@@ -213,3 +213,35 @@ export async function queryBuilder({ input }: { input: SearchProductsParams }) {
 export const getProducts = unstable_cache(queryBuilder, ["product"], {
   revalidate: 60 * 60 * 2,
 });
+
+export const getProductBySlug = unstable_cache(
+  async ({ slug }: { slug: string }) => {
+    const product = await db.product.findFirst({
+      where: {
+        slug,
+      },
+      include: {
+        rating: true,
+        productImage: true,
+        stockandsize: true,
+      },
+    });
+
+    if (!product) {
+      return undefined;
+    }
+    const rating = await db.rating.aggregate({
+      where: { product: { slug } },
+      _avg: { value: true },
+    });
+
+    return {
+      ...product,
+      rating: rating._avg.value ?? 0,
+    };
+  },
+  ["product_slug"],
+  {
+    revalidate: 60 * 60 * 2,
+  },
+);
