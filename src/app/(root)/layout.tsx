@@ -1,5 +1,6 @@
 import Footer from "@/components/navigation/footer";
 import Navbar from "@/components/navigation/navbar";
+import DialogProvider from "@/provider/dialog-provider";
 import React from "react";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -8,6 +9,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <Navbar />
       {children}
       <Footer />
+      <DialogProvider />
     </>
   );
 };

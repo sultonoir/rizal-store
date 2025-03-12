@@ -3,6 +3,7 @@ import Logo from "./logo";
 import { DarkMode } from "../ui/dark-mode";
 import { MenuNavbar } from "./menu-navbar";
 import { SearchForm } from "../form/search-form";
+import CartButton from "@/components/cart/cart-button";
 
 const Navbar = () => {
   return (
@@ -11,7 +12,10 @@ const Navbar = () => {
         <div className="flex flex-row items-center justify-between gap-4">
           <Logo />
           <SearchForm className="flex-grow" />
-          <DarkMode />
+          <div className="flex flex-none items-center gap-2">
+            <DarkMode />
+            <CartButton />
+          </div>
         </div>
         <MenuNavbar className="hidden lg:flex" />
       </nav>
