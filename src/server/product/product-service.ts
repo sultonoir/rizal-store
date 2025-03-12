@@ -2,13 +2,13 @@ import { Prisma } from "@prisma/client";
 import { SearchProductsParams } from "./product-model";
 import { db } from "../db";
 import { unstable_cache } from "../unstable-cache";
+import { queryRecommendation } from "../recommend/recommen-service";
 
 export async function queryBuilder({ input }: { input: SearchProductsParams }) {
   const {
     q,
     category,
     subcategory,
-    size,
     min,
     max,
     discount,
@@ -17,7 +17,7 @@ export async function queryBuilder({ input }: { input: SearchProductsParams }) {
     sort = "latest", // Default sorting
   } = input;
   const conditions: Prisma.ProductWhereInput[] = [];
-  const page = parseInt(input.page ?? "1");
+  const page = input.page ?? 1;
   const skip = (page - 1) * take;
 
   if (q) {
@@ -46,23 +46,16 @@ export async function queryBuilder({ input }: { input: SearchProductsParams }) {
     });
   }
 
-  // Filter by size
-  if (size) {
-    conditions.push({
-      stockandsize: { some: { name: { contains: size, mode: "insensitive" } } },
-    });
-  }
-
   // Price range filtering
   const priceConditions: Prisma.ProductWhereInput[] = [];
   if (min) {
     priceConditions.push({
-      priceAfterDiscount: { gte: parseFloat(min) },
+      priceAfterDiscount: { gte: min },
     });
   }
   if (max) {
     priceConditions.push({
-      priceAfterDiscount: { lte: parseFloat(max) },
+      priceAfterDiscount: { lte: max },
     });
   }
 
@@ -75,7 +68,7 @@ export async function queryBuilder({ input }: { input: SearchProductsParams }) {
 
   if (discount) {
     conditions.push({
-      discount: { gte: parseFloat(discount) },
+      discount: { gte: discount },
     });
   }
 
@@ -189,7 +182,7 @@ export async function queryBuilder({ input }: { input: SearchProductsParams }) {
   if (rating) {
     return {
       products: newProducts
-        .filter((product) => product.rating >= parseInt(rating))
+        .filter((product) => product.rating >= rating)
         .sort((a, b) => {
           return b.rating - a.rating;
         }),
@@ -245,3 +238,21 @@ export const getProductBySlug = unstable_cache(
     revalidate: 60 * 60 * 2,
   },
 );
+
+export async function searchProducts(params: SearchProductsParams) {
+  const { products, pagination } = await queryBuilder({ input: params });
+
+  if (products.length === 0) {
+    return {
+      products: undefined,
+      pagination,
+      recommend: await queryRecommendation({}),
+    };
+  }
+
+  return {
+    products,
+    pagination,
+    recommend: undefined,
+  };
+}

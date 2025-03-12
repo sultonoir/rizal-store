@@ -6,6 +6,7 @@ import NumberFlow from "@number-flow/react";
 import clsx from "clsx/lite";
 import { Minus, Plus } from "lucide-react";
 import * as React from "react";
+import { Label } from "../ui/label";
 
 const ProductCounter = () => {
   const { sizes } = useSizes();
@@ -24,7 +25,7 @@ const ProductCounter = () => {
     let next = count;
 
     if (el.value === "") {
-      next = min; // Default to min value if input is empty
+      next = 0; // Default to min value if input is empty
     } else {
       const num = parseInt(el.value);
       if (!isNaN(num) && num >= min && num <= max) next = num; // Validate range
@@ -62,7 +63,11 @@ const ProductCounter = () => {
       </button>
 
       <div className="relative grid items-center justify-items-center text-center [grid-template-areas:'overlap'] *:[grid-area:overlap]">
+        <Label className="sr-only" htmlFor="math">
+          quntity cart
+        </Label>
         <input
+          id="math"
           ref={inputRef}
           className={clsx(
             showCaret ? "caret-primary" : "caret-transparent",

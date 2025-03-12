@@ -1,3 +1,4 @@
+import { SearchProductsParams } from "@/server/product/product-model";
 import { Product, ProductImage, Rating, StockAndSize } from "@prisma/client";
 
 export type ProductCard = Product & {
@@ -60,4 +61,24 @@ export type ReviewerProps = {
   pagination: Pagination;
   stats: RatingStats;
   page?: string;
+};
+
+type Params = Promise<Record<string, string>>;
+type SearchParams = Promise<Record<string, string | undefined>>;
+
+export type PageDynamic = {
+  searchParams: SearchParams;
+  params: Params;
+};
+
+export type SearchProductsClient = {
+  params?: { category?: string; subcategory?: string };
+  title: string;
+  searchParams: SearchProductsParams;
+};
+
+export type SearchProduct = {
+  products?: ProductCard[];
+  pagination: Pagination;
+  recommend?: ProductCard[];
 };

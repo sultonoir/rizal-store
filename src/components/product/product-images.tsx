@@ -20,7 +20,8 @@ export const ProductImages = ({ images }: Props) => {
           width={713}
           height={713}
           layout="constrained"
-          priority
+          priority={true}
+          background="data:image/bmp;base64,Qk1aBAAAAAAAADYAAAAoAAAABAAAAAMAAAABABgAAAAAACQAAAATCwAAEwsAAAAAAAAAAAAA8fHx6ejo4uHh6ujo8/Ly6+rq5OPj6+rq9fT08fDw7u3t8vHx"
           className="rounded-lg object-cover"
         />
       </Lens>
@@ -33,10 +34,11 @@ export const ProductImages = ({ images }: Props) => {
             <Image
               src={image.url}
               alt={image.id}
-              width={200}
-              height={200}
+              width={180}
+              height={180}
               onMouseEnter={() => setPicture(image)}
               onClick={() => setPicture(image)}
+              background="data:image/bmp;base64,Qk1aBAAAAAAAADYAAAAoAAAABAAAAAMAAAABABgAAAAAACQAAAATCwAAEwsAAAAAAAAAAAAA8fHx6ejo4uHh6ujo8/Ly6+rq5OPj6+rq9fT08fDw7u3t8vHx"
               className="aspect-square object-cover"
             />
           </div>

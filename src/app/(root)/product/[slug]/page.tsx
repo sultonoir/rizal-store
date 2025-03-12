@@ -36,9 +36,7 @@ const Page = async ({ params }: Props) => {
       <Suspense>
         <ReviewServer slug={slug} />
       </Suspense>
-      <Suspense>
-        <RecommendSection slug={slug} />
-      </Suspense>
+      <RecommendSection slug={slug} />
     </div>
   );
 };

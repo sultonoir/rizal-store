@@ -37,6 +37,7 @@ function ReviewStats({
               <Progress
                 value={rating.percentage}
                 className="w-full flex-grow"
+                aria-label="rating percentage"
               />
               <div className="min-w-[30px] flex-shrink-0 whitespace-nowrap text-right text-sm text-muted-foreground">
                 {rating.count}
