@@ -82,3 +82,10 @@ export type SearchProduct = {
   pagination: Pagination;
   recommend?: ProductCard[];
 };
+
+export type GlobalResponse = {
+  success: boolean;
+  error?: {
+    message: string;
+  };
+};
