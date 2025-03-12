@@ -16,9 +16,11 @@ const CartButton = () => {
       variant="ghost"
       className="relative rounded-full"
     >
-      <div className="absolute -right-[9px] -top-[4px] flex size-5 items-center justify-center rounded-full bg-primary text-xs leading-none text-white lg:-right-1 lg:top-0">
-        {totalQuantity}
-      </div>
+      {totalQuantity > 0 && (
+        <div className="absolute -right-[9px] -top-[4px] flex size-5 items-center justify-center rounded-full bg-primary text-xs leading-none text-white lg:-right-1 lg:top-0">
+          {totalQuantity > 99 ? "99+" : totalQuantity}
+        </div>
+      )}
       <ShoppingBag />
     </Button>
   );
