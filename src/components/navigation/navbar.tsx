@@ -4,6 +4,7 @@ import { DarkMode } from "../ui/dark-mode";
 import { MenuNavbar } from "./menu-navbar";
 import { SearchForm } from "../form/search-form";
 import CartButton from "@/components/cart/cart-button";
+import SigninButton from "../signin/signin-button";
 
 const Navbar = () => {
   return (
@@ -15,6 +16,7 @@ const Navbar = () => {
           <div className="flex flex-none items-center gap-2">
             <DarkMode />
             <CartButton />
+            <SigninButton />
           </div>
         </div>
         <MenuNavbar className="hidden lg:flex" />

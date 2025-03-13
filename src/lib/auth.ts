@@ -1,13 +1,29 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { PrismaClient } from "@prisma/client";
-import { admin } from "better-auth/plugins";
-import { magicLink } from "better-auth/plugins";
-import { EmailTemplate, sendMail } from "./email";
+import { admin, createAuthMiddleware } from "better-auth/plugins";
+import { db } from "@/server/db";
 
-const prisma = new PrismaClient();
 export const auth = betterAuth({
-  database: prismaAdapter(prisma, {
+  emailAndPassword: {
+    enabled: true,
+  },
+  hooks: {
+    before: createAuthMiddleware(async (ctx) => {
+      if (ctx.path === "/sign-in/email") {
+        return {
+          context: {
+            ...ctx,
+            body: {
+              ...ctx.body,
+              email: process.env.EMAIL_GUEST,
+              password: process.env.PASSWORD_GUEST,
+            },
+          },
+        };
+      }
+    }),
+  },
+  database: prismaAdapter(db, {
     provider: "postgresql", // or "mysql", "postgresql", ...etc
   }),
   socialProviders: {
@@ -22,14 +38,5 @@ export const auth = betterAuth({
       trustedProviders: ["google", "github"],
     },
   },
-  plugins: [
-    admin(),
-    magicLink({
-      sendMagicLink: async ({ email, url }) => {
-        await sendMail(email, EmailTemplate.MagicLink, {
-          link: url,
-        });
-      },
-    }),
-  ],
+  plugins: [admin()],
 });

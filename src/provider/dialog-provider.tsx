@@ -13,11 +13,19 @@ const FilterMobile = dynamic(
   },
 );
 
+const DialogSignin = dynamic(
+  () => import("@/components/signin/signin-dialog"),
+  {
+    ssr: false,
+  },
+);
+
 const DialogProvider = () => {
   return (
     <Suspense>
       <DialogCart />
       <FilterMobile />
+      <DialogSignin />
     </Suspense>
   );
 };

@@ -8,13 +8,13 @@ import PromoHero from "@/components/promo/promo-hero";
 import { getPromotions } from "@/server/promo/promo-service";
 
 const Page = async () => {
-  const promotions = await getPromotions()
+  const promotions = await getPromotions();
   return (
     <main className="min-h-screen space-y-10 py-5">
       <HomePromotions />
       <div className="container space-y-10">
         <ProductCarousel />
-        <PromoHero hero={promotions}/>
+        <PromoHero hero={promotions} />
       </div>
       <section className="container space-y-10">
         <HomeFlow />

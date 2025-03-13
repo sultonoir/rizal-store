@@ -22,7 +22,7 @@
     --accent-foreground: 240 5.9% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --ring: 240 5% 64.9%;
+    --ring: 212 100% 47%;
     --radius: 0.5rem;
 
     --chart-1: 12 76% 61%;
@@ -66,7 +66,7 @@
     --destructive-foreground: 0 85.7% 97.3%;
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --ring: 212 100% 47%;
 
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
@@ -91,89 +91,5 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-feature-settings:
-      "rlig" 1,
-      "calt" 1;
   }
-}
-
-@layer utilities {
-  .step {
-    counter-increment: step;
-  }
-
-  .step:before {
-    @apply absolute inline-flex h-9 w-9 items-center justify-center rounded-full border-4 border-background bg-muted text-center -indent-px font-mono text-base font-medium;
-    @apply ml-[-50px] mt-[-4px];
-    content: counter(step);
-  }
-}
-
-@media (max-width: 640px) {
-  .container {
-    @apply px-4;
-  }
-}
-
-.lab-bg {
-  --mask-offset: 100px;
-  -webkit-mask:
-    linear-gradient(
-      to bottom,
-      transparent,
-      #fff var(--mask-offset) calc(100% - var(--mask-offset)),
-      transparent
-    ),
-    linear-gradient(
-      to right,
-      transparent,
-      #fff var(--mask-offset) calc(100% - var(--mask-offset)),
-      transparent
-    );
-  mask:
-    linear-gradient(
-      to bottom,
-      transparent,
-      #fff var(--mask-offset) calc(100% - var(--mask-offset)),
-      transparent
-    ),
-    linear-gradient(
-      to right,
-      transparent,
-      #fff var(--mask-offset) calc(100% - var(--mask-offset)),
-      transparent
-    );
-  /* -webkit-mask: radial-gradient(circle at 50% 50%,transparent 0,#fff calc(100% - var(--mask-offset)),transparent 100%); */
-  -webkit-mask-composite: source-in, xor;
-  mask-composite: intersect;
-}
-
-.scroll-section {
-  overflow: hidden;
-  /* Sesuaikan dengan kebutuhan */
-}
-
-.scroll-section:hover {
-  overflow-y: auto; /* Scrollbar akan muncul saat di-hover */
-}
-
-/* Menyembunyikan scrollbar secara default */
-.scroll-section::-webkit-scrollbar {
-  width: 10px;
-  opacity: 0; /* Opacity awal scrollbar adalah 0 (tidak terlihat) */
-  transition: opacity 0.5s ease; /* Menambahkan transisi untuk efek fade */
-}
-
-/* Menampilkan scrollbar saat hover pada .scroll-section */
-.scroll-section:hover::-webkit-scrollbar {
-  opacity: 1; /* Opacity scrollbar menjadi 1 (terlihat) saat hover */
-}
-
-.scroll-section::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 10px;
-}
-
-.scroll-section::-webkit-scrollbar-thumb:hover {
-  background: #555;
 }
