@@ -20,12 +20,20 @@ const DialogSignin = dynamic(
   },
 );
 
+const NavbarMobile = dynamic(
+  () => import("@/components/navigation/navbar-mobile"),
+  {
+    ssr: false,
+  },
+);
+
 const DialogProvider = () => {
   return (
     <Suspense>
       <DialogCart />
       <FilterMobile />
       <DialogSignin />
+      <NavbarMobile />
     </Suspense>
   );
 };

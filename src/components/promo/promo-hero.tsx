@@ -39,7 +39,7 @@ function PromoHero({ hero, autoSlideInterval = 5000 }: CarouselProps) {
   }, [nextSlide, autoSlideInterval]);
 
   return (
-    <div className="relative mx-auto w-full max-w-screen-lg">
+    <div className="relative isolate mx-auto w-full max-w-screen-lg">
       <div className="relative overflow-hidden rounded-2xl">
         {/* Slides */}
         <div

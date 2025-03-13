@@ -6,7 +6,7 @@ import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { User2 } from "lucide-react";
 
 export function SigninForm({
@@ -18,13 +18,12 @@ export function SigninForm({
 
   const searchParams = useSearchParams();
   const callbackURL = searchParams.get("callbackURL") ?? "/";
-
+  const router = useRouter();
   const handleSubmit = async () => {
     await authClient.signIn.email(
       {
         email: "",
         password: "",
-        callbackURL,
       },
       {
         onRequest: () => {
@@ -40,6 +39,7 @@ export function SigninForm({
           toast.success(
             "magic link successfully sent, check your inbox or spam",
           );
+          router.refresh();
         },
       },
     );
