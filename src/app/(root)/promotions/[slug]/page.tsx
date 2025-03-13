@@ -6,6 +6,8 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import React from "react";
 
+export const runtime = "edge";
+
 export async function generateMetadata(props: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
