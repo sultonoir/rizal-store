@@ -36,9 +36,6 @@ export function SigninForm({
           toast.error(ctx.error.message);
         },
         onSuccess() {
-          toast.success(
-            "magic link successfully sent, check your inbox or spam",
-          );
           router.refresh();
         },
       },

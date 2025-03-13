@@ -214,7 +214,6 @@ export const getProductBySlug = unstable_cache(
         slug,
       },
       include: {
-        rating: true,
         productImage: true,
         stockandsize: true,
       },
@@ -235,7 +234,7 @@ export const getProductBySlug = unstable_cache(
   },
   ["product_slug"],
   {
-    revalidate: 60 * 60 * 2,
+    revalidate: 60,
   },
 );
 

@@ -34,7 +34,7 @@ export async function updateStock({
         message: `Stock is insufficient for the following items: ${insufficientStockItems
           .map(
             (item) =>
-              `${item.size} of product ${item.productId} (Requested: ${item.amount}, Available: ${
+              `${item.size} of product ${item.name} (Requested: ${item.amount}, Available: ${
                 stockItems[cart.indexOf(item)]?.amount ?? 0
               })`,
           )

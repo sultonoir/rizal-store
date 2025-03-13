@@ -6,6 +6,7 @@ export const CreatePayment = z.object({
       productId: z.string(),
       size: z.string(),
       amount: z.number(),
+      name: z.string(),
     }),
   ),
   promoId: z.string().optional(),

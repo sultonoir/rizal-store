@@ -20,7 +20,7 @@ import {
   Flame,
   Repeat,
   Sparkles,
-  Stars,
+  Star,
 } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -74,12 +74,12 @@ const sortOptions = [
   {
     value: "hot-sale",
     label: "Hot sales",
-    icon: <Flame className="fill-red-500" />,
+    icon: <Flame className="text-rose-500" />,
   },
   {
     value: "most-rating",
     label: "Most rating",
-    icon: <Stars className="fill-amber-500 text-amber-500" />,
+    icon: <Star className="text-amber-500" />,
   },
   {
     value: "latest",

@@ -89,3 +89,13 @@ export type GlobalResponse = {
     message: string;
   };
 };
+
+type MenuListProfile = {
+  title: string;
+  path: string;
+  keybind: string;
+};
+
+export type MenuProfileProps = {
+  menulists: MenuListProfile[];
+};

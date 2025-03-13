@@ -15,7 +15,7 @@ const Navbar = () => {
           <SearchForm className="flex-grow" />
           <div className="flex flex-none items-center gap-2">
             <DarkMode />
-            <div className="hidden space-x-2 md:block">
+            <div className="hidden items-center space-x-4 md:flex">
               <CartButton />
               <SigninButton />
             </div>
