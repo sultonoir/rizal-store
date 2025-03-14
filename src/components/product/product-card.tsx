@@ -12,33 +12,34 @@ type Props = {
 
 const ProductCard = ({ product }: Props) => {
   return (
-    <Card className="relative rounded-2xl border p-2 shadow-lg">
-      <Link
-        href={`/product/${product.slug}`}
-        prefetch={true}
-        title={product.name}
-      >
-        <Image
-          alt={product.name}
-          src={product.productImage.url}
-          width={300}
-          height={400}
-          layout="constrained"
-          className="rounded-lg object-cover"
-        />
-        <CardContent className="relative mt-4 space-y-2 bg-background p-2">
-          <CardTitle className="w-[calc(100%-1px)] truncate text-[16px] font-normal leading-none">
+    <Card className="relative isolate overflow-hidden rounded-2xl border p-2 shadow-lg">
+      <Image
+        alt={product.name}
+        src={product.productImage.url}
+        width={300}
+        height={400}
+        layout="constrained"
+        className="rounded-lg object-cover"
+      />
+      <CardContent className="mt-4 space-y-2 bg-background p-2">
+        <CardTitle className="w-[calc(100%-1px)] truncate text-[16px] font-normal leading-none">
+          <Link
+            href={`/product/${product.slug}`}
+            prefetch={true}
+            title={product.name}
+          >
+            <span className="absolute inset-0" />
             {product.name}
-          </CardTitle>
-          <ProductRating rating={product.rating} />
-          <ProductPrice
-            discount={product.discount}
-            price={product.price}
-            priceAfterDiscount={product.priceAfterDiscount}
-            className="flex-grow"
-          />
-        </CardContent>
-      </Link>
+          </Link>
+        </CardTitle>
+        <ProductRating rating={product.rating} />
+        <ProductPrice
+          discount={product.discount}
+          price={product.price}
+          priceAfterDiscount={product.priceAfterDiscount}
+          className="flex-grow"
+        />
+      </CardContent>
     </Card>
   );
 };

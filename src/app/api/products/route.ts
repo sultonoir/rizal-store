@@ -14,7 +14,6 @@ export async function GET(request: NextRequest) {
   );
 
   const parsedata = SearchProductsParams.parse(searchParams);
-  console.log({ searchParams, parsedata });
 
   const results = await searchProducts(parsedata);
   const response = Response.json(results);
