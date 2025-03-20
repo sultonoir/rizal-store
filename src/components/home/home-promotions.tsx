@@ -1,51 +1,104 @@
-import Image from "next/image";
+import { Image } from "@unpic/react/nextjs";
 import Link from "next/link";
 
 export const HomePromotions = () => {
+  const avatars = [
+    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&h=100&q=80",
+    "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=100&h=100&q=80",
+    "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=100&h=100&q=80",
+  ];
+
   return (
-    <div className="bg-accent">
-      <div className="mx-auto flex flex-col items-center px-4 py-10 md:container">
-        <span className="mb-4 text-sm font-bold uppercase">Promotions</span>
-        <h2 className="mb-6 text-center text-3xl font-bold text-black dark:text-white md:text-4xl">
-          Our Promotions Events
-        </h2>
-        <div className="grid w-full max-w-[1150px] grid-cols-2 gap-3 md:grid-cols-4">
-          <Link href="/" className="relative col-span-2">
-            <Image
-              priority
-              src="/promo-banner-1.webp"
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              alt="promo banner 1 image"
-            />
-          </Link>
-          <Link href="/" className="relative row-span-2">
-            <Image
-              priority
-              src="/promo-banner-2.webp"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              fill
-              alt="promo banner 2 image"
-            />
-          </Link>
-          <Link href="/" className="relative row-span-2">
-            <Image
-              priority
-              src="/promo-banner-3.webp"
-              width={400}
-              height={200}
-              alt="promo banner 3 image"
-            />
-          </Link>
-          <Link href="/" className="relative col-span-2">
-            <Image
-              priority
-              src="/promo-banner-4.webp"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              fill
-              alt="promo banner 4 image"
-            />
-          </Link>
+    <div className="grid min-h-[calc(100vh-4rem)] lg:grid-cols-2">
+      {/* Left Content */}
+      <div className="flex items-center px-4 py-12 sm:px-6 lg:px-8 lg:py-0">
+        <div className="mx-auto max-w-xl space-y-8 lg:mx-0">
+          <div>
+            <p className="font-medium tracking-wide text-sky-700 dark:text-sky-500">
+              NEW COLLECTION 2025
+            </p>
+            <h1 className="mt-3 text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+              Elevate Your Style This Season
+            </h1>
+            <p className="mt-6 max-w-lg text-lg text-muted-foreground">
+              Discover our curated collection of premium fashion pieces designed
+              to make you stand out.
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-4 sm:flex-row">
+            <Link
+              href="/collections"
+              prefetch={true}
+              className="rounded-full bg-primary px-8 py-4 transition duration-300 hover:bg-primary/80"
+            >
+              Start shopping now
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-3 gap-6 pt-8">
+            <div>
+              <p className="text-3xl font-bold">50+</p>
+              <p className="mt-1 text-sm text-muted-foreground">Brands</p>
+            </div>
+            <div>
+              <p className="text-3xl font-bold">200+</p>
+              <p className="mt-1 text-sm text-muted-foreground">New Items</p>
+            </div>
+            <div>
+              <p className="text-3xl font-bold">48h</p>
+              <p className="mt-1 text-sm text-muted-foreground">Delivery</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Right Image Grid */}
+      <div className="relative grid grid-cols-2 gap-4 p-4 sm:p-6 lg:p-8">
+        <div className="relative aspect-[3/4]">
+          <Image
+            src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=800&q=80"
+            alt="Fashion model in winter coat"
+            className="absolute inset-0 h-full w-full rounded-xl object-cover"
+            width={370}
+            layout="constrained"
+            loading="eager"
+          />
+        </div>
+        <div className="relative mt-12 aspect-[3/4]">
+          <Image
+            src="https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&w=800&q=80"
+            alt="Fashion model in summer dress"
+            className="absolute inset-0 h-full w-full rounded-xl object-cover"
+            layout="constrained"
+            loading="eager"
+          />
+        </div>
+        <div className="absolute -bottom-6 left-1/2 w-[calc(100%-3rem)] -translate-x-1/2 rounded-xl bg-accent p-6 shadow-xl sm:w-auto lg:bottom-36">
+          <div className="flex items-center gap-4 whitespace-nowrap">
+            <div className="flex -space-x-3">
+              {avatars.map((avatar, i) => (
+                <div
+                  key={i}
+                  className="h-10 w-10 overflow-hidden rounded-full border-2 border-white bg-white"
+                >
+                  <Image
+                    src={avatar}
+                    alt={`Customer ${i + 1}`}
+                    height={40}
+                    width={40}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+            <div>
+              <p className="font-medium">Join 10k+ others</p>
+              <p className="text-sm text-muted-foreground">
+                Satisfied customers
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
